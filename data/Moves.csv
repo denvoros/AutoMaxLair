@@ -28,7 +28,7 @@ Aromatic Mist,FAIRY,Status,?,?,20,,Raises Special Defense of an ally.,?
 Assist,NORMAL,Status,?,?,20,,User performs a move known by its allies at random.,?
 Assurance,DARK,Physical,60,100,10,TM58,Power doubles if opponent already took damage in the same turn.,?
 Astonish,GHOST,Physical,30,100,15,,May cause flinching.,30
-Astral Barrage,GHOST,Special,120,100,5,,The user attacks by sending a frightful amount of small ghosts at opposing Pok‚mon.,?
+Astral Barrage,GHOST,Special,120,100,5,,The user attacks by sending a frightful amount of small ghosts at opposing Pokï¿½mon.,?
 Attack Order,BUG,Physical,90,100,15,,High critical hit ratio.,?
 Attract,NORMAL,Status,?,100,15,TM31,"If opponent is the opposite gender, it's less likely to attack.",?
 Aura Sphere,FIGHTING,Special,80,100,20,,Ignores Accuracy and Evasiveness.,?
@@ -42,9 +42,9 @@ Baddy Bad,DARK,Special,90,100,15,,Reduces damage from Physical attacks.,?
 Baneful Bunker,POISON,Status,?,?,10,,Protects the user and poisons opponent on contact.,?
 Barrage,NORMAL,Physical,15,85,20,,Hits 2-5 times in one turn.,?
 Barrier,PSYCHIC,Status,?,?,20,,Sharply raises user's Defense.,?
-Baton Pass,NORMAL,Status,?,?,40,,User switches out and gives stat changes to the incoming Pok‚mon.,?
-Beak Blast,FLYING,Physical,100,100,15,,"The user first heats up its beak, and then it attacks the target. Making direct contact with the Pok‚mon while it's heating up its beak results in a burn.",?
-Beat Up,DARK,Physical,?,100,10,TM37,Each Pok‚mon in your party attacks.,?
+Baton Pass,NORMAL,Status,?,?,40,,User switches out and gives stat changes to the incoming Pokï¿½mon.,?
+Beak Blast,FLYING,Physical,100,100,15,,"The user first heats up its beak, and then it attacks the target. Making direct contact with the Pokï¿½mon while it's heating up its beak results in a burn.",?
+Beat Up,DARK,Physical,?,100,10,TM37,Each Pokï¿½mon in your party attacks.,?
 Behemoth Bash,STEEL,Physical,100,100,5,,Damage doubles if user is Dynamaxed.,?
 Behemoth Blade,STEEL,Physical,100,100,5,,Damage doubles if user is Dynamaxed.,?
 Belch,POISON,Special,120,90,10,,User must have consumed a Berry.,?
@@ -67,7 +67,7 @@ Bolt Strike,ELECTRIC,Physical,130,85,5,,May paralyze opponent.,20
 Bone Club,GROUND,Physical,65,85,20,,May cause flinching.,10
 Bone Rush,GROUND,Physical,25,90,10,,Hits 2-5 times in one turn.,?
 Bonemerang,GROUND,Physical,50,90,10,,Hits twice in one turn.,?
-Boomburst,NORMAL,Special,140,100,10,,Hits all adjacent Pok‚mon.,?
+Boomburst,NORMAL,Special,140,100,10,,Hits all adjacent Pokï¿½mon.,?
 Bounce,FLYING,Physical,85,85,5,TM52,"Springs up on first turn, attacks on second. May paralyze opponent.",30
 Bouncy Bubble,WATER,Special,90,100,15,,User recovers half the HP inflicted on opponent.,?
 Branch Poke,GRASS,Physical,40,100,40,,,?
@@ -92,13 +92,13 @@ Calm Mind,PSYCHIC,Status,?,?,20,,Raises user's Special Attack and Special Defens
 Camouflage,NORMAL,Status,?,?,20,,Changes user's type according to the location.,?
 Captivate,NORMAL,Status,?,100,20,,Sharply lowers opponent's Special Attack if opposite gender.,?
 Catastropika,ELECTRIC,Physical,210,?,1,,Pikachu-exclusive Z-Move.,?
-Celebrate,NORMAL,Status,?,?,40,,The Pok‚mon congratulates you on your special day. No battle effect.,?
+Celebrate,NORMAL,Status,?,?,40,,The Pokï¿½mon congratulates you on your special day. No battle effect.,?
 Charge,ELECTRIC,Status,?,?,20,,Raises user's Special Defense and next Electric move's power increases.,?
 Charge Beam,ELECTRIC,Special,50,90,10,,May raise user's Special Attack.,70
 Charm,FAIRY,Status,?,100,20,TM29,Sharply lowers opponent's Attack.,?
 Chatter,FLYING,Special,65,100,20,,Confuses opponent.,100
 Chip Away,NORMAL,Physical,70,100,20,,Ignores opponent's stat changes.,?
-Circle Throw,FIGHTING,Physical,60,90,10,,"In battles, the opponent switches. In the wild, the Pok‚mon runs.",?
+Circle Throw,FIGHTING,Physical,60,90,10,,"In battles, the opponent switches. In the wild, the Pokï¿½mon runs.",?
 Clamp,WATER,Physical,35,85,15,,"Traps opponent, damaging them for 4-5 turns.",100
 Clanging Scales,DRAGON,Special,110,100,5,,Lowers user's Defense.,100
 Clangorous Soul,DRAGON,Status,?,100,5,,Raises all user's stats but loses HP.,100
@@ -126,7 +126,7 @@ Counter,FIGHTING,Physical,?,100,20,,"When hit by a Physical Attack, user strikes
 Court Change,NORMAL,Status,?,100,10,,Swaps the effects on either side of the field.,?
 Covet,NORMAL,Physical,60,100,25,,Opponent's item is stolen by the user.,?
 Crabhammer,WATER,Physical,100,90,10,,High critical hit ratio.,?
-Crafty Shield,FAIRY,Status,?,?,10,,Protects the Pok‚mon from status moves.,?
+Crafty Shield,FAIRY,Status,?,?,10,,Protects the Pokï¿½mon from status moves.,?
 Cross Chop,FIGHTING,Physical,100,80,5,,High critical hit ratio.,?
 Cross Poison,POISON,Physical,70,100,20,TM73,High critical hit ratio. May poison opponent.,10
 Crunch,DARK,Physical,80,100,15,,May lower opponent's Defense.,20
@@ -170,7 +170,7 @@ Dragon Hammer,DRAGON,Physical,90,100,15,,The user uses its body like a hammer to
 Dragon Pulse,DRAGON,Special,85,100,10,,,?
 Dragon Rage,DRAGON,Special,?,100,10,,Always inflicts 40 HP.,?
 Dragon Rush,DRAGON,Physical,100,75,10,,May cause flinching.,20
-Dragon Tail,DRAGON,Physical,60,90,10,,"In battles, the opponent switches. In the wild, the Pok‚mon runs.",?
+Dragon Tail,DRAGON,Physical,60,90,10,,"In battles, the opponent switches. In the wild, the Pokï¿½mon runs.",?
 Drain Punch,FIGHTING,Physical,75,100,10,TM63,User recovers half the HP inflicted on opponent.,?
 Draining Kiss,FAIRY,Special,50,100,10,TM87,User recovers most the HP inflicted on opponent.,?
 Dream Eater,PSYCHIC,Special,100,100,15,,User recovers half the HP inflicted on a sleeping opponent.,?
@@ -187,7 +187,7 @@ Echoed Voice,NORMAL,Special,40,100,15,,Power increases each turn.,?
 Eerie Impulse,ELECTRIC,Status,?,100,15,TM93,Sharply lowers opponent's Special Attack.,?
 Eerie Spell,PSYCHIC,Special,80,100,5,,Deals damage and reduces opponent's PP.,?
 Egg Bomb,NORMAL,Physical,100,75,10,,,?
-Electric Terrain,ELECTRIC,Status,?,?,10,TM90,Prevents all Pok‚mon from falling asleep for 5 turns.,?
+Electric Terrain,ELECTRIC,Status,?,?,10,TM90,Prevents all Pokï¿½mon from falling asleep for 5 turns.,?
 Electrify,ELECTRIC,Status,?,?,20,,Changes the target's move to Electric type.,?
 Electro Ball,ELECTRIC,Special,?,100,10,,"The faster the user, the stronger the attack.",?
 Electroweb,ELECTRIC,Special,55,95,15,TM82,Lowers opponent's Speed.,100
@@ -229,7 +229,7 @@ First Impression,BUG,Physical,90,100,10,,"Although this move has great power, it
 Fishious Rend,WATER,Physical,85,100,10,,"If the user attacks before the target, the power of this move is doubled.",?
 Fissure,GROUND,Physical,?,30,5,,"One-Hit-KO, if it hits.",?
 Flail,NORMAL,Physical,?,100,15,,"The lower the user's HP, the higher the power.",?
-Flame Burst,FIRE,Special,70,100,15,,May also injure nearby Pok‚mon.,?
+Flame Burst,FIRE,Special,70,100,15,,May also injure nearby Pokï¿½mon.,?
 Flame Charge,FIRE,Physical,50,100,20,,Raises user's Speed.,100
 Flame Wheel,FIRE,Physical,60,100,25,,May burn opponent.,10
 Flamethrower,FIRE,Special,90,100,15,,May burn opponent.,10
@@ -239,10 +239,10 @@ Flash Cannon,STEEL,Special,80,100,10,,May lower opponent's Special Defense.,10
 Flatter,DARK,Status,?,100,15,,"Confuses opponent, but raises its Special Attack by two stages.",?
 Fleur Cannon,FAIRY,Special,130,90,5,,Sharply lowers user's Special Attack.,100
 Fling,DARK,Physical,?,100,10,TM59,Power depends on held item.,?
-Flip Turn,WATER,Physical,60,100,20,,"After making its attack, the user rushes back to switch places with a party Pok‚mon in waiting.",?
+Flip Turn,WATER,Physical,60,100,20,,"After making its attack, the user rushes back to switch places with a party Pokï¿½mon in waiting.",?
 Floaty Fall,FLYING,Physical,90,95,15,,May cause flinching.,30
 Floral Healing,FAIRY,Status,?,?,10,,The user restores the target's HP by up to half of its max HP. It restores more HP when the terrain is grass.,?
-Flower Shield,FAIRY,Status,?,?,10,,Sharply raises Defense of all Grass-type Pok‚mon on the field.,100
+Flower Shield,FAIRY,Status,?,?,10,,Sharply raises Defense of all Grass-type Pokï¿½mon on the field.,100
 Fly,FLYING,Physical,90,95,15,TM06,"Flies up on first turn, attacks on second turn.",?
 Flying Press,FIGHTING,Physical,100,95,10,,Deals Fighting and Flying type damage.,?
 Focus Blast,FIGHTING,Special,120,70,5,,May lower opponent's Special Defense.,10
@@ -301,13 +301,13 @@ G-Max Wildfire,FIRE,Physical,?,100,10,,Charizard-exclusive G-Max Move. Damages n
 G-Max Wind Rage,FLYING,Physical,?,100,10,,Corviknight-exclusive G-Max Move. Removes battlefield hazards.,?
 Gastro Acid,POISON,Status,?,100,10,,Cancels out the effect of the opponent's Ability.,?
 Gear Grind,STEEL,Physical,50,85,15,,Hits twice in one turn.,?
-Gear Up,STEEL,Status,?,?,20,,The user engages its gears to raise the Attack and Sp. Atk stats of ally Pok‚mon with the Plus or Minus Ability.,?
+Gear Up,STEEL,Status,?,?,20,,The user engages its gears to raise the Attack and Sp. Atk stats of ally Pokï¿½mon with the Plus or Minus Ability.,?
 Genesis Supernova,PSYCHIC,Special,185,?,1,,Mew-exclusive Z-Move.,?
 Geomancy,FAIRY,Status,?,?,10,,"Charges on first turn, sharply raises user's Sp. Attack, Sp. Defense and Speed on the second.",?
 Giga Drain,GRASS,Special,75,100,10,TM28,User recovers half the HP inflicted on opponent.,?
 Giga Impact,NORMAL,Physical,150,90,5,TM09,User must recharge next turn.,?
 Gigavolt Havoc,ELECTRIC,?,?,?,1,,Electric type Z-Move.,?
-Glacial Lance,ICE,Physical,130,100,5,,The user attacks by hurling a blizzard-cloaked icicle lance at opposing Pok‚mon.,?
+Glacial Lance,ICE,Physical,130,100,5,,The user attacks by hurling a blizzard-cloaked icicle lance at opposing Pokï¿½mon.,?
 Glaciate,ICE,Special,65,95,10,,Lowers opponent's Speed.,100
 Glare,NORMAL,Status,?,100,30,,Paralyzes opponent.,?
 Glitzy Glow,PSYCHIC,Special,90,100,15,,Reduces damage from Special attacks.,?
@@ -315,7 +315,7 @@ Grass Knot,GRASS,Special,?,100,20,,"The heavier the opponent, the stronger the a
 Grass Pledge,GRASS,Special,80,100,10,,Added effects appear if preceded by Water Pledge or succeeded by Fire Pledge.,?
 Grass Whistle,GRASS,Status,?,55,15,,Puts opponent to sleep.,?
 Grassy Glide,GRASS,Physical,70,100,20,,High priority during Grassy Terrain.,?
-Grassy Terrain,GRASS,Status,?,?,10,TM88,Restores a little HP of all Pok‚mon for 5 turns.,?
+Grassy Terrain,GRASS,Status,?,?,10,TM88,Restores a little HP of all Pokï¿½mon for 5 turns.,?
 Grav Apple,GRASS,Physical,80,100,10,,Lowers the opponent's Defense stat.,100
 Gravity,PSYCHIC,Status,?,?,5,,Prevents moves like Fly and Bounce and the Ability Levitate for 5 turns.,?
 Growl,NORMAL,Status,?,100,40,,Lowers opponent's Attack.,?
@@ -326,7 +326,7 @@ Guard Swap,PSYCHIC,Status,?,?,10,TM61,User and opponent swap Defense and Special
 Guardian of Alola,FAIRY,Special,?,?,1,,Tapu-exclusive Z-move. Cuts opponent's HP by 75%.,?
 Guillotine,NORMAL,Physical,?,30,5,,"One-Hit-KO, if it hits.",?
 Gunk Shot,POISON,Physical,120,80,5,,May poison opponent.,30
-Gust,FLYING,Special,40,100,35,,Hits Pok‚mon using Fly/Bounce with double power.,?
+Gust,FLYING,Special,40,100,35,,Hits Pokï¿½mon using Fly/Bounce with double power.,?
 Gyro Ball,STEEL,Physical,?,100,5,,"The slower the user, the stronger the attack.",?
 Hail,ICE,Status,?,?,10,TM35,Non-Ice types are damaged for 5 turns.,?
 Hammer Arm,FIGHTING,Physical,100,90,10,,Lowers user's Speed.,100
@@ -340,7 +340,7 @@ Heal Bell,NORMAL,Status,?,?,5,,Heals the user's party's status conditions.,?
 Heal Block,PSYCHIC,Status,?,100,15,,Prevents the opponent from restoring HP for 5 turns.,?
 Heal Order,BUG,Status,?,?,10,,User recovers half its max HP.,?
 Heal Pulse,PSYCHIC,Status,?,?,10,,Restores half the target's max HP.,?
-Healing Wish,PSYCHIC,Status,?,?,10,,The user faints and the next Pok‚mon released is fully healed.,?
+Healing Wish,PSYCHIC,Status,?,?,10,,The user faints and the next Pokï¿½mon released is fully healed.,?
 Heart Stamp,PSYCHIC,Physical,60,100,25,,May cause flinching.,30
 Heart Swap,PSYCHIC,Status,?,?,10,,Stat changes are swapped with the opponent.,?
 Heat Crash,FIRE,Physical,?,100,10,,"The heavier the user, the stronger the attack.",?
@@ -421,7 +421,7 @@ Lovely Kiss,NORMAL,Status,?,75,10,,Puts opponent to sleep.,?
 Low Kick,FIGHTING,Physical,?,100,20,,"The heavier the opponent, the stronger the attack.",?
 Low Sweep,FIGHTING,Physical,65,100,20,TM75,Lowers opponent's Speed.,100
 Lucky Chant,NORMAL,Status,?,?,30,,Opponent cannot land critical hits for 5 turns.,?
-Lunar Dance,PSYCHIC,Status,?,?,10,,The user faints but the next Pok‚mon released is fully healed.,?
+Lunar Dance,PSYCHIC,Status,?,?,10,,The user faints but the next Pokï¿½mon released is fully healed.,?
 Lunge,BUG,Physical,80,100,15,,"The user makes a lunge at the target, attacking with full force. This also lowers the target's Attack stat.",100
 Luster Purge,PSYCHIC,Special,70,100,5,,May lower opponent's Special Defense.,50
 Mach Punch,FIGHTING,Physical,40,100,30,,User attacks first.,?
@@ -432,7 +432,7 @@ Magical Leaf,GRASS,Special,60,100,20,TM10,Ignores Accuracy and Evasiveness.,?
 Magma Storm,FIRE,Special,100,75,5,,"Traps opponent, damaging them for 4-5 turns.",100
 Magnet Bomb,STEEL,Physical,60,100,20,,Ignores Accuracy and Evasiveness.,?
 Magnet Rise,ELECTRIC,Status,?,?,10,,User becomes immune to Ground-type moves for 5 turns.,?
-Magnetic Flux,ELECTRIC,Status,?,?,20,,Raises Defense and Sp. Defense of Plus/Minus Pok‚mon.,?
+Magnetic Flux,ELECTRIC,Status,?,?,20,,Raises Defense and Sp. Defense of Plus/Minus Pokï¿½mon.,?
 Magnitude,GROUND,Physical,?,100,30,,Hits with random power.,?
 Malicious Moonsault,DARK,Physical,180,?,1,,Incineroar-exclusive Z-Move.,?
 Mat Block,FIGHTING,Status,?,?,10,,Protects teammates from damaging moves.,?
@@ -455,7 +455,7 @@ Max Starfall,FAIRY,?,?,?,?,,Fairy type Dynamax move. Summons Misty Terrain.,?
 Max Steelspike,STEEL,?,?,?,?,,Steel type Dynamax move. Raises the team's Defense.,100
 Max Strike,NORMAL,?,?,?,?,,Normal type Dynamax move. Lowers the target's Speed.,100
 Max Wyrmwind,DRAGON,?,?,?,?,,Dragon type Dynamax move. Lowers the target's Attack.,100
-Me First,NORMAL,Status,?,?,20,,User copies the opponent's attack with 1.5ž power.,?
+Me First,NORMAL,Status,?,?,20,,User copies the opponent's attack with 1.5ï¿½ power.,?
 Mean Look,NORMAL,Status,?,?,5,,Opponent cannot flee or switch.,?
 Meditate,PSYCHIC,Status,?,?,40,,Raises user's Attack.,?
 Mega Drain,GRASS,Special,40,100,15,,User recovers half the HP inflicted on opponent.,?
@@ -525,8 +525,8 @@ Parting Shot,DARK,Status,?,100,20,,Lowers opponent's Attack and Special Attack t
 Pay Day,NORMAL,Physical,40,100,20,TM02,A small amount of money is gained after the battle resolves.,?
 Payback,DARK,Physical,50,100,10,TM57,Power doubles if the user was attacked first.,?
 Peck,FLYING,Physical,35,100,35,,,?
-Perish Song,NORMAL,Status,?,?,5,,Any Pok‚mon in play when this attack is used faints in 3 turns.,?
-Petal Blizzard,GRASS,Physical,90,100,15,,Hits all adjacent Pok‚mon.,?
+Perish Song,NORMAL,Status,?,?,5,,Any Pokï¿½mon in play when this attack is used faints in 3 turns.,?
+Petal Blizzard,GRASS,Physical,90,100,15,,Hits all adjacent Pokï¿½mon.,?
 Petal Dance,GRASS,Special,120,100,10,,User attacks for 2-3 turns but then becomes confused.,?
 Phantom Force,GHOST,Physical,90,100,10,TM86,"Disappears on first turn, attacks on second. Can strike through Protect/Detect.",?
 Photon Geyser,PSYCHIC,Special,100,100,5,,"Uses Attack or Special Attack stat, whichever is higher.",?
@@ -545,7 +545,7 @@ Poison Tail,POISON,Physical,50,100,25,,High critical hit ratio. May poison oppon
 Pollen Puff,BUG,Special,90,100,15,,Deals damage to opponent or restores HP of teammate.,?
 Poltergeist,GHOST,Physical,110,90,5,,Fails if the target doesn?t have an item.,?
 Pound,NORMAL,Physical,40,100,35,,,?
-Powder,BUG,Status,?,100,20,,Damages Pok‚mon using Fire type moves.,?
+Powder,BUG,Status,?,100,20,,Damages Pokï¿½mon using Fire type moves.,?
 Powder Snow,ICE,Special,40,100,25,,May freeze opponent.,10
 Power Gem,ROCK,Special,80,100,20,,,?
 Power Split,PSYCHIC,Status,?,?,10,,Averages Attack and Special Attack with the target.,?
@@ -598,7 +598,7 @@ Revelation Dance,NORMAL,Special,90,100,15,,Type changes based on Oricorio's form
 Revenge,FIGHTING,Physical,60,100,10,TM42,Power increases if user was hit first.,?
 Reversal,FIGHTING,Physical,?,100,15,,"The lower the user's HP, the higher the power.",?
 Rising Voltage,ELECTRIC,Special,70,100,20,,Power doubles on Electric Terrain.,?
-Roar,NORMAL,Status,?,?,20,,"In battles, the opponent switches. In the wild, the Pok‚mon runs.",?
+Roar,NORMAL,Status,?,?,20,,"In battles, the opponent switches. In the wild, the Pokï¿½mon runs.",?
 Roar of Time,DRAGON,Special,150,90,5,,User must recharge next turn.,?
 Rock Blast,ROCK,Physical,25,90,10,TM54,Hits 2-5 times in one turn.,?
 Rock Climb,NORMAL,Physical,90,85,20,,May confuse opponent.,20
@@ -672,7 +672,7 @@ Sleep Talk,NORMAL,Status,?,?,10,,User performs one of its own moves while sleepi
 Sludge,POISON,Special,65,100,20,,May poison opponent.,30
 Sludge Bomb,POISON,Special,90,100,10,,May poison opponent.,30
 Sludge Wave,POISON,Special,95,100,10,,May poison opponent.,10
-Smack Down,ROCK,Physical,50,100,15,,Makes Flying-type Pok‚mon vulnerable to Ground moves.,100
+Smack Down,ROCK,Physical,50,100,15,,Makes Flying-type Pokï¿½mon vulnerable to Ground moves.,100
 Smart Strike,STEEL,Physical,70,?,10,TM96,The user stabs the target with a sharp horn. This attack never misses.,?
 Smelling Salts,NORMAL,Physical,70,100,10,,"Power doubles if opponent is paralyzed, but cures it.",?
 Smog,POISON,Special,30,70,20,,May poison opponent.,40
@@ -691,7 +691,7 @@ Soul-Stealing 7-Star Strike,GHOST,Physical,195,?,1,,Marshadow-exclusive Z-Move.,
 Spacial Rend,DRAGON,Special,100,95,5,,High critical hit ratio.,?
 Spark,ELECTRIC,Physical,65,100,20,,May paralyze opponent.,30
 Sparkling Aria,WATER,Special,90,100,10,,Heals the burns of its target.,?
-Sparkly Swirl,FAIRY,Special,90,100,15,,Cures all status problems in the party Pok‚mon.,?
+Sparkly Swirl,FAIRY,Special,90,100,15,,Cures all status problems in the party Pokï¿½mon.,?
 Spectral Thief,GHOST,Physical,90,100,10,,"The user hides in the target's shadow, steals the target's stat boosts, and then attacks.",?
 Speed Swap,PSYCHIC,Status,?,?,10,TM62,The user exchanges Speed stats with the target.,?
 Spider Web,BUG,Status,?,?,10,,Opponent cannot escape/switch.,?
@@ -739,7 +739,7 @@ Super Fang,NORMAL,Physical,?,90,10,,Always takes off half of the opponent's HP.,
 Superpower,FIGHTING,Physical,120,100,5,,Lowers user's Attack and Defense.,100
 Supersonic,NORMAL,Status,?,55,20,,Confuses opponent.,?
 Supersonic Skystrike,FLYING,?,?,?,1,,Flying type Z-Move.,?
-Surf,WATER,Special,90,100,15,,Hits all adjacent Pok‚mon.,?
+Surf,WATER,Special,90,100,15,,Hits all adjacent Pokï¿½mon.,?
 Surging Strikes,WATER,Physical,25,100,5,,Always results in a critical hit and ignores stat changes.,?
 Swagger,NORMAL,Status,?,85,15,,"Opponent becomes confused, but its Attack is sharply raised.",?
 Swallow,NORMAL,Status,?,?,10,,"The more times the user has performed Stockpile, the more HP is recovered.",?
@@ -748,7 +748,7 @@ Sweet Scent,NORMAL,Status,?,100,20,,Lowers opponent's Evasiveness.,?
 Swift,NORMAL,Special,60,100,20,TM40,Ignores Accuracy and Evasiveness.,?
 Switcheroo,DARK,Status,?,100,10,,Swaps held items with the opponent.,?
 Swords Dance,NORMAL,Status,?,?,20,,Sharply raises user's Attack.,?
-Synchronoise,PSYCHIC,Special,120,100,10,,Hits any Pok‚mon that shares a type with the user.,?
+Synchronoise,PSYCHIC,Special,120,100,10,,Hits any Pokï¿½mon that shares a type with the user.,?
 Synthesis,GRASS,Status,?,?,5,,User recovers HP. Amount varies with the weather.,?
 Tackle,NORMAL,Physical,40,100,35,,,?
 Tail Glow,BUG,Status,?,?,20,,Drastically raises user's Special Attack.,?
@@ -759,15 +759,15 @@ Take Down,NORMAL,Physical,90,85,20,,User receives recoil damage.,?
 Tar Shot,ROCK,Status,?,100,15,,Lowers the opponent's Speed and makes them weaker to Fire-type moves.,100
 Taunt,DARK,Status,?,100,20,,Opponent can only use moves that attack.,?
 Tearful Look,NORMAL,Status,?,?,20,,The user gets teary eyed to make the target lose its combative spirit. This lowers the target's Attack and Sp. Atk stats.,100
-Teatime,NORMAL,Status,?,?,10,,Forces all Pok‚mon on the field to eat their berries.,?
+Teatime,NORMAL,Status,?,?,10,,Forces all Pokï¿½mon on the field to eat their berries.,?
 Techno Blast,NORMAL,Special,120,100,5,,Type depends on the Drive being held.,?
 Tectonic Rage,GROUND,?,?,?,1,,Ground type Z-Move.,?
-Teeter Dance,NORMAL,Status,?,100,20,,Confuses all Pok‚mon.,?
+Teeter Dance,NORMAL,Status,?,100,20,,Confuses all Pokï¿½mon.,?
 Telekinesis,PSYCHIC,Status,?,?,15,,"Ignores opponent's Evasiveness for three turns, add Ground immunity.",?
-Teleport,PSYCHIC,Status,?,?,20,,Allows user to flee wild battles; also warps player to last Pok‚Center.,?
+Teleport,PSYCHIC,Status,?,?,20,,Allows user to flee wild battles; also warps player to last Pokï¿½Center.,?
 Terrain Pulse,NORMAL,Special,50,100,10,,Type and power change depending on the Terrain in effect.,?
 Thief,DARK,Physical,60,100,25,TM23,Also steals opponent's held item.,?
-Thousand Arrows,GROUND,Physical,90,100,10,,Makes Flying-type Pok‚mon vulnerable to Ground moves.,?
+Thousand Arrows,GROUND,Physical,90,100,10,,Makes Flying-type Pokï¿½mon vulnerable to Ground moves.,?
 Thousand Waves,GROUND,Physical,90,100,10,,Opponent cannot flee or switch.,?
 Thrash,NORMAL,Physical,120,100,10,,User attacks for 2-3 turns but then becomes confused.,?
 Throat Chop,DARK,Physical,80,100,15,,Prevents use of sound moves for two turns.,100
@@ -788,7 +788,7 @@ Toxic Thread,POISON,Status,?,100,20,,Lowers target's Speed.,100
 Transform,NORMAL,Status,?,?,10,,User takes on the form and attacks of the opponent.,?
 Tri Attack,NORMAL,Special,80,100,10,,"May paralyze, burn or freeze opponent.",20
 Trick,PSYCHIC,Status,?,100,10,,Swaps held items with the opponent.,?
-Trick Room,PSYCHIC,Status,?,?,5,TM70,Slower Pok‚mon move first in the turn for 5 turns.,?
+Trick Room,PSYCHIC,Status,?,?,5,TM70,Slower Pokï¿½mon move first in the turn for 5 turns.,?
 Trick-or-Treat,GHOST,Status,?,100,20,,Adds Ghost type to opponent.,?
 Triple Axel,ICE,Physical,20,90,10,,Attacks thrice with more power each time.,?
 Triple Kick,FIGHTING,Physical,10,90,10,,Hits thrice in one turn at increasing power.,?
@@ -796,7 +796,7 @@ Trop Kick,GRASS,Physical,70,100,15,,Lowers opponent's Attack.,100
 Trump Card,NORMAL,Special,?,100,5,,"The lower the PP, the higher the power.",?
 Twineedle,BUG,Physical,25,100,20,,Hits twice in one turn. May poison opponent.,20
 Twinkle Tackle,FAIRY,?,?,?,1,,Fairy type Z-Move.,?
-Twister,DRAGON,Special,40,100,20,,May cause flinching. Hits Pok‚mon using Fly/Bounce with double power.,20
+Twister,DRAGON,Special,40,100,20,,May cause flinching. Hits Pokï¿½mon using Fly/Bounce with double power.,20
 U-turn,BUG,Physical,70,100,20,TM56,User switches out immediately after attacking.,?
 Uproar,NORMAL,Special,90,100,10,,User attacks for 3 turns and prevents sleep.,?
 V-create,FIRE,Physical,180,95,5,,"Lowers user's Defense, Special Defense and Speed.",100
@@ -819,7 +819,7 @@ Water Spout,WATER,Special,150,100,5,,"The higher the user's HP, the higher the d
 Waterfall,WATER,Physical,80,100,15,,May cause flinching.,20
 Weather Ball,NORMAL,Special,50,100,10,TM46,Move's power and type changes with the weather.,?
 Whirlpool,WATER,Special,35,85,15,TM36,"Traps opponent, damaging them for 4-5 turns.",100
-Whirlwind,NORMAL,Status,?,?,20,,"In battles, the opponent switches. In the wild, the Pok‚mon runs.",?
+Whirlwind,NORMAL,Status,?,?,20,,"In battles, the opponent switches. In the wild, the Pokï¿½mon runs.",?
 Wicked Blow,DARK,Physical,80,100,5,,Always results in a critical hit and ignores stat changes.,?
 Wide Guard,ROCK,Status,?,?,10,,Protects the user's team from multi-target attacks.,?
 Wild Charge,ELECTRIC,Physical,90,100,15,,User receives recoil damage.,?
@@ -827,7 +827,7 @@ Will-O-Wisp,FIRE,Status,?,85,15,TM38,Burns opponent.,?
 Wing Attack,FLYING,Physical,60,100,35,,,?
 Wish,NORMAL,Status,?,?,10,,The user recovers HP in the following turn.,?
 Withdraw,WATER,Status,?,?,40,,Raises user's Defense.,?
-Wonder Room,PSYCHIC,Status,?,?,10,TM71,Swaps every Pok‚mon's Defense and Special Defense for 5 turns.,?
+Wonder Room,PSYCHIC,Status,?,?,10,TM71,Swaps every Pokï¿½mon's Defense and Special Defense for 5 turns.,?
 Wood Hammer,GRASS,Physical,120,100,15,,User receives recoil damage.,?
 Work Up,NORMAL,Status,?,?,30,,Raises user's Attack and Special Attack.,?
 Worry Seed,GRASS,Status,?,100,10,,Changes the opponent's Ability to Insomnia.,?

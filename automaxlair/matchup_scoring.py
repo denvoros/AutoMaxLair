@@ -1,37 +1,53 @@
 # Matchup Scoring
 #   Eric Donders
 #   2020-11-27
+
 import copy
-from typing import TypeVar, Dict, List
+from typing import Dict, List, TypeVar
+
+from automaxlair import logger
+
 Pokemon = TypeVar('Pokemon')
 Move = TypeVar('Move')
+
+
+# type damage table initialized in memory to avoid creating and deloading copies multiple times
+TYPE_DAMAGE_TABLE = ((1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 1),
+                     (1, 0.5, 0.5, 1, 2, 2, 1, 1, 1,
+                      1, 1, 2, 0.5, 1, 0.5, 1, 2, 1),
+                     (1, 2, 0.5, 1, 0.5, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1),
+                     (1, 1, 2, 0.5, 0.5, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0.5, 1, 1, 1),
+                     (1, 0.5, 2, 1, 0.5, 1, 1, 0.5, 2,
+                      0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 1),
+                     (1, 0.5, 0.5, 1, 2, 0.5, 1, 1,
+                      2, 2, 1, 1, 1, 1, 2, 1, 0.5, 1),
+                     (2, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5,
+                      0.5, 0.5, 2, 0, 1, 2, 2, 0.5),
+                     (1, 1, 1, 1, 2, 1, 1, 0.5, 0.5,
+                      1, 1, 1, 0.5, 0.5, 1, 1, 0, 2),
+                     (1, 2, 1, 2, 0.5, 1, 1, 2, 1, 0, 1, 0.5, 2, 1, 1, 1, 2, 1),
+                     (1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 0.5, 1),
+                     (1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0.5, 1, 1, 1, 1, 0, 0.5, 1),
+                     (1, 0.5, 1, 1, 2, 1, 0.5, 0.5, 1,
+                      0.5, 2, 1, 1, 0.5, 1, 2, 0.5, 0.5),
+                     (1, 2, 1, 1, 1, 2, 0.5, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 0.5, 1),
+                     (0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 1),
+                     (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0.5, 0),
+                     (1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 0.5),
+                     (1, 0.5, 0.5, 0.5, 1, 2, 1, 1,
+                      1, 1, 1, 1, 2, 1, 1, 1, 0.5, 2),
+                     (1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1)
+                     )
+TYPE_TABLE_ORDER = ('Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison',
+                    'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy')
 
 
 def type_damage_multiplier(type1: str, type2: str) -> int:
     """Return a damage multiplier based on an attack type and target type."""
     if type2 == '':
         return 1
-    types = ('Normal', 'Fire', 'Water', 'Electric', 'Grass', 'Ice', 'Fighting', 'Poison',
-             'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy')
-    return ((1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 1),
-            (1, 0.5, 0.5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 0.5, 1, 0.5, 1, 2, 1),
-            (1, 2, 0.5, 1, 0.5, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1),
-            (1, 1, 2, 0.5, 0.5, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0.5, 1, 1, 1),
-            (1, 0.5, 2, 1, 0.5, 1, 1, 0.5, 2, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 1),
-            (1, 0.5, 0.5, 1, 2, 0.5, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 0.5, 1),
-            (2, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 2, 0, 1, 2, 2, 0.5),
-            (1, 1, 1, 1, 2, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 0, 2),
-            (1, 2, 1, 2, 0.5, 1, 1, 2, 1, 0, 1, 0.5, 2, 1, 1, 1, 2, 1),
-            (1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 0.5, 1),
-            (1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0.5, 1, 1, 1, 1, 0, 0.5, 1),
-            (1, 0.5, 1, 1, 2, 1, 0.5, 0.5, 1, 0.5, 2, 1, 1, 0.5, 1, 2, 0.5, 0.5),
-            (1, 2, 1, 1, 1, 2, 0.5, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 0.5, 1),
-            (0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 1),
-            (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0.5, 0),
-            (1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 0.5),
-            (1, 0.5, 0.5, 0.5, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5, 2),
-            (1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1)
-            )[types.index(type1.title())][types.index(type2.title())]
+
+    return TYPE_DAMAGE_TABLE[TYPE_TABLE_ORDER.index(type1.title())][TYPE_TABLE_ORDER.index(type1.title())]
 
 
 def ability_damage_multiplier(attacker: Pokemon, move_index: int, defender: Pokemon) -> float:
@@ -216,14 +232,33 @@ def calculate_move_score(attacker: Pokemon, move_index: int, defender: Pokemon, 
 
 def evaluate_matchup(attacker: Pokemon, boss: Pokemon, teammates: Dict[str, Pokemon] = {}) -> float:
     """Return a matchup score between an attacker and defender, with the attacker using optimal moves and the defender using average moves."""
+
+    # fix for ditto, which just becomes the boss
     if attacker.name == 'Ditto':
         attacker = boss
+
     base_version = copy.copy(attacker)
     base_version.dynamax = False
     dmax_version = copy.copy(attacker)
-    dmax_version.dynamax = False
-    score = max(calculate_move_score(base_version, select_best_move(base_version, boss, teammates), boss, teammates),
-                (calculate_move_score(base_version, select_best_move(base_version, boss, teammates), boss, teammates)+calculate_move_score(dmax_version, select_best_move(dmax_version, boss, teammates), boss, teammates))/2)
+    dmax_version.dynamax = True
+
+    # avoid redundant calculations, choose the best move first
+    best_move = select_best_move(base_version, boss, teammates)
+
+    # then choose the best dmax move
+    best_dmax_move = select_best_move(dmax_version, boss, teammates)
+
+    # then calculate the scores
+    base_score = calculate_move_score(base_version, best_move, boss, teammates)
+
+    # then get the dynamax score
+    dmax_score = calculate_move_score(
+        dmax_version, best_dmax_move, boss, teammates)
+
+    # then we return the final score which is the maximum between the original move
+    # and the average between the original move and dmax score
+    score = max(base_score, (base_score + dmax_score)/2)
+
     return score
 
 

@@ -4,6 +4,11 @@ Establishes logger and exposes functions to the `automaxlair`
 name space.
 """
 
+import logging as __logging
+
+# define the logger for the package so that it can be imported and used elsewhere
+logger = __logging.getLogger("automaxlair")
+
 # imports for the matchup scoring functions
 from automaxlair.matchup_scoring import (
     ability_damage_multiplier, type_damage_multiplier, 
