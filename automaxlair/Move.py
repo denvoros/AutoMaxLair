@@ -3,8 +3,11 @@
 #   2020-11-27
 import copy
 
+
 class Move():
-    def __init__(self, Name, Type, Category, Power, Accuracy, PP, TM, Effect, Probability, is_spread=False, correction_factor=1):
+    def __init__(self, Name, Type, Category, Power, Accuracy, 
+                 PP, TM, Effect, Probability, 
+                 is_spread=False, correction_factor=1):
         self.name = Name
         self.type = Type
         self.category = Category

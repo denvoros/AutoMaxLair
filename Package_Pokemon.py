@@ -3,12 +3,14 @@
 #   2020-11-27
 #   Read information on Pokemon and construct sets of rental and boss Pokemon used in Dynamax Adventures
 
-from Pokemon_Data.Pokemon import Pokemon
-from Pokemon_Data.Move import Move
-from Pokemon_Data import matchup_scoring
-from copy import copy
 import csv
+import os
 import pickle
+from copy import copy
+
+from Pokemon_Data import matchup_scoring
+from Pokemon_Data.Move import Move
+from Pokemon_Data.Pokemon import Pokemon
 
 spread_move_list = []
 with open('Pokemon_Data/Spread_moves.txt', newline='\n') as tsvfile:
