@@ -8,20 +8,32 @@ import logging
 import logging.handlers
 import os
 import pickle
-from copy import copy
+from copy import copy, deepcopy
+import multiprocessing as mp
+from functools import partial
+import tqdm
+
 
 from automaxlair import Move, Pokemon, evaluate_matchup, get_max_move_power
 
-logger = logging.getLogger("packagePokemon")
+# this is the name of the logger, not the file that's created for logging purposes
+LOG_NAME = "packagePokemon"
 
 BASE_DATA_FOLDER = "data"
+
+# one minus the max number of cores for efficiency
+MAX_NUM_THREADS = mp.cpu_count() - 1
+
+# enable the debug logs being saved to the logging file
+# this does not affect the console data
+ENABLE_DEBUG_LOGS = True
 
 
 def package_spread_move_list():
     """Loads in spread move data from the text file
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info("Beginning to process spread move file.")
 
@@ -43,7 +55,7 @@ def package_move_list(spread_move_list):
     Requires the spread_move_list for further processing.
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info('Beginning to process the move file.')
 
@@ -96,7 +108,7 @@ def package_max_move_list():
     """Loads in max move data from the text file
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info('Beginning to process max move file.')
 
@@ -126,7 +138,7 @@ def package_pokemon_base_stats():
     """Loads in Pokemon base stats data from the text file
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info('Beginning to process Pokemon base stats.')
 
@@ -148,7 +160,7 @@ def package_pokemon_types():
     """Loads in pokemon types base data from the text file
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info('Beginning to process Pokemon type data.')
 
@@ -169,7 +181,7 @@ def package_rental_pokemon_data(move_list, max_move_list, status_max_move, pokem
     """Takes the previously extracted Pokemon data, and gets only rentals
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info("Beginning to process rental Pokemon data.")
 
@@ -214,7 +226,7 @@ def package_rental_pokemon_data(move_list, max_move_list, status_max_move, pokem
                 logger.warn('Duplicate entry found! - ' + name)
             rental_pokemon[name] = Pokemon(
                 name, ability, pokemon_types[name], pokemon_base_stats[name], moves, max_moves, level)
-    
+
     logger.info('Read and processed rental Pokemon file.')
 
     return rental_pokemon
@@ -224,7 +236,7 @@ def package_boss_pokemon(move_list, max_move_list, status_max_move, pokemon_type
     """Processes the boss Pokemon data
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info("Beginning to process the Boss Pokemon")
 
@@ -271,82 +283,144 @@ def package_boss_pokemon(move_list, max_move_list, status_max_move, pokemon_type
     return boss_pokemon
 
 
-def calculate_boss_matchup_LUT(rental_pokemon, boss_pokemon):
+def iterate_through_defenders(defenders, rental_pokemon, attacker):
+    """This is a wrapper function that matches up a list of defenders with an attacker
+
+    Defenders is an iterable dictionary of all of the defender data.
+    Please note that this function is primarily designed for use with 
+    the Python multiprocessing package.
+    """
+    logger = logging.getLogger(LOG_NAME)
+
+    logger.debug("Beginning processing for attacker: %s", attacker[0])
+
+    matchups = {}
+    for idefender, (_, defender) in enumerate(defenders.items()):
+        # the 1 in attacker is because we're iterating over the items, and it passes in as a tuple
+        matchups[defender.name] = evaluate_matchup(
+            attacker[1], defender, rental_pokemon)
+        logger.debug(
+            f"  ({idefender+1:02d}/{len(defenders):02d}) %s vs %s -- Matchup complete!", defender.name, attacker[0], )
+
+    logger.debug("Finished for attacker: %s", attacker[0])
+
+    return matchups
+
+
+def calculate_boss_matchup_LUT(rental_pokemon, boss_pokemon, queue):
     """Processes the boss matchup data
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
     logger.info("Processing the boss matchup data with all rental pokemon")
-    logger.info(f"There are {len(boss_pokemon)} Boss Pokemon to iterate through")
-    logger.info(f"There are {len(rental_pokemon)} Rental Pokemon that will be accounted for")
-    logger.info(f"That means there are a total of {len(boss_pokemon) * len(rental_pokemon)} iterations!")
+    logger.info(
+        f"There are {len(boss_pokemon)} Boss Pokemon to iterate through")
+    logger.info(
+        f"There are {len(rental_pokemon)} Rental Pokemon that will be accounted for")
+    logger.info(
+        f"That means there are a total of {len(boss_pokemon) * len(rental_pokemon)} iterations!")
 
+    partial_func = partial(iterate_through_defenders,
+                           boss_pokemon, rental_pokemon)
+
+    # set up parallel pool for easy processing, also call our initialization and give it our queue
+    pool = mp.Pool(MAX_NUM_THREADS, worker_init, [queue])
+
+    # then we can have the pool iterate through the whole shebang
+    all_matchups = list(tqdm.tqdm(
+        pool.imap(partial_func, rental_pokemon.items()),
+        ncols=80, total=len(rental_pokemon),
+        desc="Boss Matchup"
+    ))
+
+    pool.close()
+    pool.join()
+
+    logger.info(
+        "Finished processing matchup data. Now extracting calculations and assigning to Pokémon")
+
+    # then we just unpack from the list into a dictionary from the rental pokemon names
     boss_matchup_LUT = {}
 
-    # iterate through attackers (rental pokemon)
     for iattacker, (_, attacker) in enumerate(rental_pokemon.items()):
-        matchups = {}
+        boss_matchup_LUT[attacker.name] = all_matchups[iattacker]
 
-        logger.debug(f"({iattacker+1:03d}/{len(rental_pokemon):03d}) Attacker is: {attacker}")
-
-        # then iterate through the defenders (bosses)
-        for idefender, (_, defender) in enumerate(boss_pokemon.items()):
-
-            logger.debug(f"  ({idefender+1:02d}/{len(boss_pokemon):02d}) Defender is: {defender}")
-
-            matchups[defender.name] = evaluate_matchup(
-                attacker, defender, rental_pokemon)
-
-        boss_matchup_LUT[attacker.name] = matchups
-
-        logger.info('Finished computing matchups for ' + str(attacker))
-
-    logger.info('Computed boss matchup LUT.')
+    logger.info('Created boss matchup LUT.')
 
     return boss_matchup_LUT
 
 
-def calculate_rental_mathcup_LUT(rental_pokemon):
+def calculate_rental_mathcup_LUT(rental_pokemon, queue):
     """Calculates the rental matchup scores for all possible rental Pokemon
     """
 
-    global logger
+    logger = logging.getLogger(LOG_NAME)
 
+    logger.info("Calculating the rental matchups")
+    logger.info(f"There are {len(rental_pokemon)} Pokemon to iterate through")
+    logger.info(
+        f"That means there will be {(len(rental_pokemon)-1)**2} iterations total!")
+
+    # rental pokemon iterate through rental pokemon
+    # use deep copy to make sure it's an actual copy of the array that won't get messed with
+    partial_func = partial(iterate_through_defenders,
+                           deepcopy(rental_pokemon), rental_pokemon)  # {})
+
+    # set up parallel pool for easy processing, also call our initialization and give it our queue
+    pool = mp.Pool(MAX_NUM_THREADS, worker_init, [queue])
+
+    # then we can have the pool iterate through the whole shebang
+    all_matchups = list(tqdm.tqdm(
+        pool.imap(partial_func, rental_pokemon.items()),
+        ncols=80, total=len(rental_pokemon),
+        desc="Rental Matchup"
+    ))
+
+    pool.close()
+    pool.join()
+
+    logger.info(
+        "Finished processing matchup data. Now extracting calculations and assigning to Pokémon")
+
+    # then we just unpack from the list into a dictionary from the rental pokemon names
     rental_matchup_LUT = {}
     rental_pokemon_scores = {}
     total_score = 0
 
-    logger.info("Calculating the rental matchups")
-    logger.info(f"There are {len(rental_pokemon)} Pokemon to iterate through")
+    for iattacker, (_, attacker) in enumerate(rental_pokemon.items()):
+        # get the results for the attacker, which is the index of the pokemon
+        results = all_matchups[iattacker]
+        rental_matchup_LUT[attacker.name] = results
 
-    # double iteration of the rental pokemon to determine matchups
-    for _, attacker in rental_pokemon.items():
-        matchups = {}
-        attacker_score = 0
-
-        logger.info("Computing matchups for " + str(attacker))
-
-        for _, defender in rental_pokemon.items():
-            matchups[defender.name] = evaluate_matchup(
-                attacker, defender, rental_pokemon)
-            attacker_score += matchups[defender.name]
-
-        rental_matchup_LUT[attacker.name] = matchups
+        # the attacker score is then just the sum of all of the value results
+        attacker_score = sum(results.values())
         rental_pokemon_scores[attacker.name] = attacker_score
+
+        # the total score is then given the attacker score
         total_score += attacker_score
 
-        logger.info('Finished computing matchups for ' + str(attacker))
-
+    # modify the rental pokemon scores by the total score
     for key in rental_pokemon_scores:
         rental_pokemon_scores[key] /= (total_score/len(rental_pokemon))
 
     logger.info('Computed rental matchup LUT.')
 
+    # then return!
     return rental_matchup_LUT, rental_pokemon_scores
 
 
-def main():
+def worker_init(q):
+    """Basic function that initializes the thread workers to know *where* to send logs to.
+    """
+    # all records from worker processes go to qh and then into q
+    qh = logging.handlers.QueueHandler(q)
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG if ENABLE_DEBUG_LOGS else logging.INFO)
+    logger.addHandler(qh)
+
+
+def main(queue):
     """This main function just runs through the functions in the right order
 
     Putting this here allows us to potentially call functions later for easier
@@ -380,23 +454,24 @@ def main():
     # then get the boss pokemon data
     boss_pokemon = package_boss_pokemon(
         move_list, max_move_list, status_max_move, pokemon_types, pokemon_base_stats)
-    
+
     # save the boss pokemon
     logger.info("Saving the Boss Pokémon")
     with open(os.path.join(BASE_DATA_FOLDER, '_Boss_Pokemon.pickle'), 'wb') as file:
         pickle.dump(boss_pokemon, file)
 
     # then calculate the boss matchups
-    boss_matchup_LUT = calculate_boss_matchup_LUT(rental_pokemon, boss_pokemon)
+    boss_matchup_LUT = calculate_boss_matchup_LUT(
+        rental_pokemon, boss_pokemon, queue)
 
     # save the boss matchup data
     logger.info("Saving the Boss Matchup Data")
     with open(os.path.join(BASE_DATA_FOLDER, '_Boss_Matchup_LUT.pickle'), 'wb') as file:
         pickle.dump(boss_matchup_LUT, file)
-    
+
     # then calculate the rental matchups
     rental_matchup_LUT, rental_pokemon_scores = calculate_rental_mathcup_LUT(
-        rental_pokemon)
+        rental_pokemon, queue)
 
     # save the rental pokemon matchup data
     logger.info("Saving the Rental Matchup Data")
@@ -412,8 +487,12 @@ def main():
 
 if __name__ == "__main__":
 
+    logger = logging.getLogger(LOG_NAME)
+
+    q = mp.Queue()
+
     # set the base logging level to the lowest possible!
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG if ENABLE_DEBUG_LOGS else logging.INFO)
 
     formatter = logging.Formatter(
         '%(asctime)s | %(name)s |  %(levelname)s: %(message)s')
@@ -422,14 +501,18 @@ if __name__ == "__main__":
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
     console.setFormatter(formatter)
-    
+
     # spit out debug info to the log file
     fileHandler = logging.handlers.TimedRotatingFileHandler(
         filename=os.path.join('logs', 'packagePokemonScript.log'),
         when='midnight',
         backupCount=30)
     fileHandler.setFormatter(formatter)
-    fileHandler.setLevel(logging.DEBUG)
+    fileHandler.setLevel(logging.DEBUG if ENABLE_DEBUG_LOGS else logging.INFO)
+
+    # add these handlers to the queue listener
+    ql = logging.handlers.QueueListener(q, fileHandler)
+    ql.start()
 
     # then add the file handlers
     logger.addHandler(console)
@@ -437,7 +520,9 @@ if __name__ == "__main__":
 
     # call main
     print("Initializing the program...")
-    main()
+    main(q)
+
+    ql.stop()
 
     # then we're done
     print("Program complete. Pickle files are now in the data/ folder")

@@ -190,14 +190,25 @@ def calculate_move_score(attacker: Pokemon, move_index: int, defender: Pokemon, 
     # Calculate contribution of the move itself (assume Dynamaxed boss)
     dealt_damage += calculate_damage(attacker, move_index, defender, False) / 2
 
+    # pop out attacker and defender to not count them twice
+    attacker_popped = teammates.pop(attacker.name, None)
+    defender_popped = teammates.pop(defender.name, None)
+
     # Estimate contributions by teammates (assume Dynamaxed boss)
-    temp_teammates = copy.deepcopy(teammates)
-    temp_teammates.pop(attacker.name, None)  # Don't count the attacker twice
-    temp_teammates.pop(defender.name, None)
+    # temp_teammates = copy.deepcopy(teammates)
+    # temp_teammates.pop(attacker.name, None)  # Don't count the attacker twice
+    # temp_teammates.pop(defender.name, None)
     fudge_factor = 1.5  # Average damage of teammates is likely undercounted as some status moves are helpful and the AI chooses better than random moves
     dealt_damage += 3 * \
         calculate_average_damage(
-            temp_teammates, {defender.name: defender}) / 2 * fudge_factor
+            teammates, {defender.name: defender}) / 2 * fudge_factor
+    
+    # put back the popped attacker and defender
+    # NOTE: this does not put it back
+    if attacker_popped is not None:
+        teammates.update({attacker.name: attacker_popped})
+    if defender_popped is not None:
+        teammates.update({defender.name: defender_popped})
 
     # Estimate contributions from status moves
     #   TODO: implement status moves besides Wide Guard
@@ -237,27 +248,34 @@ def evaluate_matchup(attacker: Pokemon, boss: Pokemon, teammates: Dict[str, Poke
     if attacker.name == 'Ditto':
         attacker = boss
 
-    base_version = copy.copy(attacker)
-    base_version.dynamax = False
-    dmax_version = copy.copy(attacker)
-    dmax_version.dynamax = True
+    # store the base dynamax value of the matchup stuff
+    original_dynamax_value = attacker.dynamax
+
+    # set the dynamax value to false
+    attacker.dynamax = False
 
     # avoid redundant calculations, choose the best move first
-    best_move = select_best_move(base_version, boss, teammates)
+    best_move = select_best_move(attacker, boss, teammates)
+
+    # calculate the move score for the non-dynamax value
+    base_score = calculate_move_score(attacker, best_move, boss, teammates)
+
+    # set the dynamax value to true
+    attacker.dynamax = True
 
     # then choose the best dmax move
-    best_dmax_move = select_best_move(dmax_version, boss, teammates)
-
-    # then calculate the scores
-    base_score = calculate_move_score(base_version, best_move, boss, teammates)
+    best_dmax_move = select_best_move(attacker, boss, teammates)
 
     # then get the dynamax score
     dmax_score = calculate_move_score(
-        dmax_version, best_dmax_move, boss, teammates)
+        attacker, best_dmax_move, boss, teammates)
 
     # then we return the final score which is the maximum between the original move
     # and the average between the original move and dmax score
     score = max(base_score, (base_score + dmax_score)/2)
+
+    # then re-update the attacker, since Python usually sends by reference
+    attacker.dynamax = original_dynamax_value
 
     return score
 
