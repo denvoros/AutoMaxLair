@@ -1,19 +1,31 @@
-# Package_Pokemon
-#   Eric Donders
-#   2020-11-27
-#   Read information on Pokemon and construct sets of rental and boss Pokemon used in Dynamax Adventures
+# -*- coding: utf-8 -*-
+"""Package_Pokemon.py - Matchup Scoring Script
+
+This script takes in all of the data surrounding Pokemon that are available for use
+in the Dynamax Adventures and then determines
+how well they perform in every possible matchup. This script may take
+a considerable amount of time to run, so please be patient when running,
+or just use the pre-processed pickle files available in the data/ directory.
+
+Note:
+    This script was written by Eric Donders (ercdndrs).
+    The initial date was 2020-11-27
+"""
 
 import csv
 import logging
 import logging.handlers
+import multiprocessing as mp
 import os
 import pickle
+import sys
 from copy import copy, deepcopy
-import multiprocessing as mp
 from functools import partial
+
 import tqdm
 
-
+# automaxlair importing for this script is in the parent directory
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from automaxlair import Move, Pokemon, evaluate_matchup, get_max_move_power
 
 # this is the name of the logger, not the file that's created for logging purposes
@@ -31,6 +43,9 @@ ENABLE_DEBUG_LOGS = True
 
 def package_spread_move_list():
     """Loads in spread move data from the text file
+
+    Returns:
+        list: A list of data regarding spread moves
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -53,6 +68,9 @@ def package_move_list(spread_move_list):
     """Loads in regular move data from the text file
 
     Requires the spread_move_list for further processing.
+
+    Returns:
+        dict: A dictionary of all moves
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -111,6 +129,10 @@ def package_move_list(spread_move_list):
 
 def package_max_move_list():
     """Loads in max move data from the text file
+
+    Returns:
+        dict: A collection of all max moves
+        Move: An object of move data for a status max move
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -141,6 +163,9 @@ def package_max_move_list():
 
 def package_pokemon_base_stats():
     """Loads in Pokemon base stats data from the text file
+
+    Returns:
+        dict: A dictinoary of all Pokemon and their stats
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -163,6 +188,9 @@ def package_pokemon_base_stats():
 
 def package_pokemon_types():
     """Loads in pokemon types base data from the text file
+
+    Returns:
+        dict: A dictionary of all Pokemon and their types
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -184,6 +212,16 @@ def package_pokemon_types():
 
 def package_rental_pokemon_data(move_list, max_move_list, status_max_move, pokemon_types, pokemon_base_stats):
     """Takes the previously extracted Pokemon data, and gets only rentals
+
+    Parameters:
+        move_list (dict): The dictionary of all moves
+        max_move_list (dict): The dictionary of all max moves
+        status_max_move (Move): The object describing a status max move
+        pokemon_types (dict): The dictionary of all Pokemon and their types
+        pokemon_base_stats (dict): The dictionary of all Pokemon and their base stats
+
+    Returns:
+        dict: A complete dictionary of all Pokemon available for rental
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -239,6 +277,16 @@ def package_rental_pokemon_data(move_list, max_move_list, status_max_move, pokem
 
 def package_boss_pokemon(move_list, max_move_list, status_max_move, pokemon_types, pokemon_base_stats):
     """Processes the boss Pokemon data
+
+    Parameters:
+        move_list (dict): The dictionary of all moves
+        max_move_list (dict): The dictionary of all max moves
+        status_max_move (Move): The object describing a status max move
+        pokemon_types (dict): The dictionary of all Pokemon and their types
+        pokemon_base_stats (dict): The dictionary of all Pokemon and their base stats
+
+    Returns:
+        dict: A complete dictionary of all Pokemon available for rental
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -294,6 +342,14 @@ def iterate_through_defenders(defenders, rental_pokemon, attacker):
     Defenders is an iterable dictionary of all of the defender data.
     Please note that this function is primarily designed for use with 
     the Python multiprocessing package.
+
+    Parameters:
+        defenders (dict): The dictionary of all defending Pokemon for iteration
+        rental_pokemon (dict): The collection of all rental Pokemon
+        attacker (Pokemon): The object describing the attacker Pokemon
+
+    Returns:
+        dict: The dictionary containing all matchup scores
     """
     logger = logging.getLogger(LOG_NAME)
 
@@ -305,7 +361,7 @@ def iterate_through_defenders(defenders, rental_pokemon, attacker):
         matchups[defender.name] = evaluate_matchup(
             attacker[1], defender, rental_pokemon)
         logger.debug(
-            f"  ({idefender+1:02d}/{len(defenders):02d}) %s vs %s -- Matchup complete!", defender.name, attacker[0], )
+            f"  ({idefender+1:02d}/{len(defenders):02d}) %s vs %s gives {matchups[defender.name]:02.05f} -- Matchup complete!", defender.name, attacker[0], )
 
     logger.debug("Finished for attacker: %s", attacker[0])
 
@@ -314,6 +370,14 @@ def iterate_through_defenders(defenders, rental_pokemon, attacker):
 
 def calculate_boss_matchup_LUT(rental_pokemon, boss_pokemon, queue):
     """Processes the boss matchup data
+
+    Parameters:
+        rental_pokemon (dict): The dictionary of all rental Pokemon for iteration
+        boss_pokemon (dict): The collection of all boss Pokemon for iteration
+        queue (multiprocessing.Queue): The queue object used for logging
+
+    Returns:
+        dict: The dictionary containing all matchup scores for bosses
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -358,6 +422,13 @@ def calculate_boss_matchup_LUT(rental_pokemon, boss_pokemon, queue):
 
 def calculate_rental_mathcup_LUT(rental_pokemon, queue):
     """Calculates the rental matchup scores for all possible rental Pokemon
+
+    Parameters:
+        rental_pokemon (dict): The dictionary of all rental Pokemon for iteration
+        queue (multiprocessing.Queue): The queue object used for logging
+
+    Returns:
+        dict: The dictionary containing all matchup scores for rental Pokemon
     """
 
     logger = logging.getLogger(LOG_NAME)
@@ -416,7 +487,10 @@ def calculate_rental_mathcup_LUT(rental_pokemon, queue):
 
 
 def worker_init(q):
-    """Basic function that initializes the thread workers to know *where* to send logs to.
+    """Basic function that initializes the thread workers to know where to send logs to.
+
+    Parameters:
+        q (multiprocessing.Queue): The queue object used for the multiprocessing
     """
     # all records from worker processes go to qh and then into q
     qh = logging.handlers.QueueHandler(q)
@@ -428,8 +502,11 @@ def worker_init(q):
 def main(queue):
     """This main function just runs through the functions in the right order
 
-    Putting this here allows us to potentially call functions later for easier
-    usage later.
+    Putting this here allows us to potentially call functions in this file later 
+    for easier usage later.
+
+    Parameters:
+        q (multiprocessing.Queue): The queue object used for the multiprocessing
     """
 
     # first call the spread move list function
@@ -527,6 +604,7 @@ if __name__ == "__main__":
     print("Initializing the program...")
     main(q)
 
+    # quit the queue listener
     ql.stop()
 
     # then we're done
