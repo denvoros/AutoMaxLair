@@ -87,7 +87,8 @@ def package_move_list(spread_move_list):
                 Probability = int(row[8])
             multiplier = 1
             if 'the user, the stronger' in Effect:
-                Power = 65  # Applies to Electro Ball, Heavy Slam, Gyro Ball, etc.
+                # Applies to Electro Ball, Heavy Slam, Gyro Ball, etc.
+                Power = 65
             if ('on first turn' in Effect) or ('next turn' in Effect) or ('second turn' in Effect):
                 multiplier *= 0.5
             if ('consumed' in Effect) or ('Fails' in Effect) or ('Can only be' in Effect):

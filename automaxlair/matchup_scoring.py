@@ -202,7 +202,7 @@ def calculate_move_score(attacker: Pokemon, move_index: int, defender: Pokemon, 
     dealt_damage += 3 * \
         calculate_average_damage(
             teammates, {defender.name: defender}) / 2 * fudge_factor
-    
+
     # put back the popped attacker and defender
     # NOTE: this does not put it back
     if attacker_popped is not None:
