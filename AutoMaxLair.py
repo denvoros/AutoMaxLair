@@ -3,18 +3,19 @@
 #       Eric Donders
 #       2020-12-26
 
-import cv2
+import configparser
+import pickle
 import time
-import serial
+from copy import copy, deepcopy
+from datetime import datetime
+
+import cv2
+import enchant
 import numpy
 import pytesseract
-import pickle
-import enchant
-import configparser
-from datetime import datetime
-from copy import copy, deepcopy
-from MaxLairInstance import MaxLairInstance
-from Pokemon_Data import matchup_scoring
+import serial
+
+from automaxlair import MaxLairInstance, matchup_scoring
 
 # Load configuration from config file
 config = configparser.ConfigParser()
@@ -39,7 +40,8 @@ rental_pokemon_scores_path = config['pokemon_data_paths']['Rental_Pokemon_Scores
 
 # Define button press sequences for different stages of the Dynamax Adventure
 join_sequence = ((0, 0, b'a'),  # Initiate conversation with scientist
-                 (0.5, 1, b'a'),  # Click again in case the first click was needed to connect the controller
+                 # Click again in case the first click was needed to connect the controller
+                 (0.5, 1, b'a'),
                  (1.5, 2, b'a'),  # Click through conversation
                  (3, 3, b'a'),  # "Yes, please!"
                  (4.5, 4, b'a'),  # Click through conversation
@@ -77,13 +79,14 @@ def join(inst):
             rental_weight = 3
             boss_weight = 2
             score = (rental_weight * inst.rental_scores[name] + boss_weight * inst.boss_matchups[name][inst.boss]) / (
-                        rental_weight + boss_weight)
+                rental_weight + boss_weight)
             pokemon_scores.append(score)
             inst.log('Score for ' + name + ':\t%0.2f' % score)
         selection_index = pokemon_scores.index(max(pokemon_scores))
         inst.pokemon = pokemon_list[selection_index]
         inst.reset_stage()
-        inst.substage = 99 - selection_index  # Go to the appropriate stage for navigating to the desired Pokemon
+        # Go to the appropriate stage for navigating to the desired Pokemon
+        inst.substage = 99 - selection_index
     elif inst.substage == 97 and stage_time > 1:
         inst.com.write(b'v')
         inst.reset_stage()
@@ -154,7 +157,8 @@ def battle(inst) -> str:
 
     # Detection subroutine
     elif inst.substage == 1:
-        text = inst.read_text(((0, 0.6), (1, 1)), invert=True)  # Read text from the bottom section of the screen
+        # Read text from the bottom section of the screen
+        text = inst.read_text(((0, 0.6), (1, 1)), invert=True)
         inst.timer = time.time()
         # print(text)
         if 'Fight' in text:
@@ -210,7 +214,8 @@ def battle(inst) -> str:
             default_score = matchup_scoring.calculate_move_score(inst.pokemon, best_move_index, inst.opponent,
                                                                  teammates=inst.rental_pokemon)
             inst.pokemon.dynamax = True  # Temporary
-            best_max_move_index = matchup_scoring.select_best_move(inst.pokemon, inst.opponent, inst.rental_pokemon)
+            best_max_move_index = matchup_scoring.select_best_move(
+                inst.pokemon, inst.opponent, inst.rental_pokemon)
             if matchup_scoring.calculate_move_score(inst.pokemon, best_max_move_index, inst.opponent,
                                                     teammates=inst.rental_pokemon) > default_score:
                 best_move_index = best_max_move_index
@@ -219,7 +224,8 @@ def battle(inst) -> str:
                 inst.dynamax_available = False  # Choose not to Dynamax this time
                 move = inst.pokemon.moves[best_move_index]
             inst.pokemon.dynamax = False  # Revert previous temporary change
-        inst.log('Best move against ' + inst.opponent.name + ': ' + move.name + ' (index ' + str(best_move_index) + ')')
+        inst.log('Best move against ' + inst.opponent.name + ': ' +
+                 move.name + ' (index ' + str(best_move_index) + ')')
         # Go to the appropriate stage for navigating to the correct move
         while inst.move_index > 3:
             inst.move_index -= 4
@@ -344,9 +350,10 @@ def catch(inst):
             inst.pokemon.name] + boss_weight * matchup_scoring.evaluate_matchup(inst.pokemon,
                                                                                 inst.boss_pokemon[inst.boss],
                                                                                 inst.rental_pokemon)) / (
-                                     rental_weight + boss_weight)
+            rental_weight + boss_weight)
         inst.log('Score for ' + pokemon.name + ':\t%0.2f' % score)
-        inst.log('Score for ' + inst.pokemon.name + ':\t%0.2f' % existing_score)
+        inst.log('Score for ' + inst.pokemon.name +
+                 ':\t%0.2f' % existing_score)
         if score > existing_score:
             # Choose to swap your existing Pokemon for the new Pokemon
             inst.com.write(b'a')
@@ -419,7 +426,8 @@ def select_pokemon(inst):
         # Check for shininess and move to the next Pokemon if not
         if inst.check_shiny():
             inst.timer = time.time()
-            inst.log('******************************\n\nShiny found!\n\n******************************')
+            inst.log(
+                '******************************\n\nShiny found!\n\n******************************')
             display_results(inst, '', time.time(), log=True)
             inst.shinies_found += 1
             if inst.substage == 4:
@@ -434,7 +442,8 @@ def select_pokemon(inst):
                     inst.timer = time.time()
                     return 'select_pokemon'
                 else:
-                    inst.log('Insufficient Dynite Ore to reset again. Quitting...')
+                    inst.log(
+                        'Insufficient Dynite Ore to reset again. Quitting...')
                     return 'done'
             # Otherwise continue to check the other Pokemon
             elif inst.substage < 7:
@@ -588,9 +597,11 @@ def display_results(inst, stage, frame_start, log=False):
     # Calculate some statistics for display
     elapsed_time = time.time() - frame_start
     fps = 'High' if elapsed_time <= 0 else '%0.1f' % (1 / (elapsed_time))
-    
-    win_percent = None if inst.runs == 0 else round(100 * inst.wins / inst.runs)
-    time_per_run = None if inst.runs == 0 else (datetime.now() - inst.start_date) / inst.runs
+
+    win_percent = None if inst.runs == 0 else round(
+        100 * inst.wins / inst.runs)
+    time_per_run = None if inst.runs == 0 else (
+        datetime.now() - inst.start_date) / inst.runs
 
     # Expand the image with blank space for writing results
     frame = cv2.copyMakeBorder(inst.get_frame(
@@ -599,10 +610,11 @@ def display_results(inst, stage, frame_start, log=False):
 
     # Construct arrays of text and values to display
     labels = (
-    'Run #', 'Stage: ', 'Substage: ', 'FPS: ', 'Base balls: ', 'Legendary balls: ', 'Pokemon caught: ', 'Pokemon: ',
-    'Opponent: ', 'Win percentage: ', 'Time per run: ', 'Shinies found: ', 'Dynite Ore: ')
+        'Run #', 'Stage: ', 'Substage: ', 'FPS: ', 'Base balls: ', 'Legendary balls: ', 'Pokemon caught: ', 'Pokemon: ',
+        'Opponent: ', 'Win percentage: ', 'Time per run: ', 'Shinies found: ', 'Dynite Ore: ')
     values = (str(inst.runs + 1), stage, str(inst.substage), fps, str(inst.base_balls), str(inst.legendary_balls),
-              str(inst.num_caught), str(inst.pokemon), str(inst.opponent), str(win_percent) + '%', str(time_per_run),
+              str(inst.num_caught), str(inst.pokemon), str(
+                  inst.opponent), str(win_percent) + '%', str(time_per_run),
               str(inst.shinies_found), str(inst.dynite_ore))
 
     for i in range(len(labels)):

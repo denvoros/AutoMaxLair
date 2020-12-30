@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Matchup Scoring
 #   Eric Donders
 #   2020-11-27

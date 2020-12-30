@@ -24,6 +24,9 @@ class Move():
 
     def __str__(self):
         return self.name
+    
+    def __repr__(self):
+        return f"Move Object: '{self.name}'"
 
     def __copy__(self):
         return type(self)(self.name, self.type, self.category, self.base_power, self.accuracy, copy.deepcopy(self.PP), self.TM, self.effect, self.probability, self.is_spread, self.correction_factor)

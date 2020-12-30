@@ -21,3 +21,6 @@ from automaxlair.Pokemon import Pokemon
 
 # imports for the Move data type
 from automaxlair.Move import Move
+
+# import the maxlairinstance
+from automaxlair.MaxLairInstance import MaxLairInstance

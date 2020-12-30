@@ -87,3 +87,6 @@ class Pokemon():
 
     def toggle_dynamax(self):
         self.dynamax = not self.dynamax
+    
+    def __repr__(self):
+        return f"Pokemon Object: '{self.name}'"
